@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="default.css">
+    <script src="https://kit.fontawesome.com/1eaa5ac35a.js" crossorigin="anonymous"></script>
+    <title>Pokedex</title>
+</head>
+<body>
+    <header class="search-header">
+        <div class="container">
+            <textarea name="search-box" id="search-box" cols="30" rows="1"></textarea>
+            <a href="#" onclick=""><i class="fas fa-search"></i></a>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="pokemon">
+                <span class="id">1</span>
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="">
+                <h3>Bulbasaur</h3>
+                <div class="types">
+                    <i class="fas fa-circle"></i>
+                    <i class="fas fa-circle"></i>
+                    <i class="fas fa-circle"></i>
+                </div>
+                <div class="stats">
+                    <div id="hp">HP</div>
+                    <div id="attack">ATK</div>
+                    <div id="defense">DEF</div>
+                    <div id="special-attack">ATK Special</div>
+                    <div id="special-defense">DEF Special</div>
+                    <div id="speed">SPD</div>
+                </div>
+                <div class="about">
+                    <span><i class="fas fa-arrows-alt-v"></i> ?? <i class="fas fa-weight"></i> ??</span>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</body>
+<script src="main.js"></script>
+</html>
