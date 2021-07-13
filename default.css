@@ -29,13 +29,16 @@ body{
 header{
     background: #141414;
     padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 header .container{
     width: 60%;
     background: #343534;
     border-radius: 8px;
-    margin: auto;
+    
 
     display: flex;
     align-items: center;
@@ -44,7 +47,7 @@ header .container{
     padding: 15px;
 }
 
-header .container textarea{
+header .container input{
     font-size: 32px;
     resize: none;
     outline: none;
@@ -52,10 +55,13 @@ header .container textarea{
     border-radius: 8px;
     margin-right: 15px;
     padding: 2px 5px;
+    text-align: center;
+    width: 80%;
 }
 
 header .container a{
     color: #a8a8a8;
+    cursor: pointer;
 }
 
 header .container a:hover{
@@ -65,6 +71,29 @@ header .container a:hover{
 a{
     text-decoration: none;
     font-size: 1.8em;
+}
+
+header .im-luck{
+    width: 20%;
+}
+
+header .im-luck a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+    background-color: #343534;
+    border: 0px solid transparent;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #a8a8a8;
+    cursor: pointer;
+}
+
+header .im-luck a:hover{
+    background-color: #434443;
 }
 
 /*_____________________ Main _____________________*/
@@ -88,17 +117,22 @@ main .container{
     box-sizing: content-box;
 }
 
+@keyframes zoomcards {
+    from{width:0; height: 0;}
+    to{width:250px; height: 500px;}
+}
+
 main .container .pokemon{
     width: 250px;
     height: 500px;
-    background-color: teal;
     border: 0px solid transparent;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 15px;
-    
+    animation: zoomcards;
+    animation-duration: 0.4s;
 }
 
 main .container .pokemon img{
@@ -144,7 +178,7 @@ main .container .pokemon img{
 .fire       {color: #F08030;}
 .water      {color: #6890F0;}
 .grass      {color: #78C850;}
-.eletric    {color: #F8D030;}
+.electric    {color: #F8D030;}
 .ice        {color: #98D8D8;}
 .fighting   {color: #C03028;}
 .poison     {color: #A040A0;}
@@ -163,7 +197,7 @@ main .container .pokemon img{
 .fire-bg       {background-color: #F080307e;}
 .water-bg      {background-color: #6890F07e;}
 .grass-bg      {background-color: #78C8507e;}
-.eletric-bg    {background-color: #F8D0307e;}
+.electric-bg    {background-color: #F8D0307e;}
 .ice-bg        {background-color: #98D8D87e;}
 .fighting-bg   {background-color: #C030287e;}
 .poison-bg     {background-color: #A040A07e;}
@@ -178,4 +212,38 @@ main .container .pokemon img{
 .steel-bg      {background-color: #B8B8D07e;}
 .fairy-bg      {background-color: #F0B6BC7e;}
 
-/*_____________________ Stats _____________________*/
+/*_____________________ Error _____________________*/
+
+@keyframes zoomerror {
+    from{
+        width:0%; 
+        height: 0;
+        font-size: 0;
+    }
+    to{
+        width:80%; 
+        height: 500px;
+        font-size: 2.0em;
+    }
+}
+
+
+.error-container{
+    width: 80%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: whitesmoke;
+    font-weight: bold;
+    font-size: 2.0em;
+    border: 0px solid transparent;
+    border-radius: 16px;
+    animation: zoomerror 0.4s;
+}
+
+.error-container p{
+    margin-top: 15px;
+}

@@ -11,33 +11,17 @@
 <body>
     <header class="search-header">
         <div class="container">
-            <textarea name="search-box" id="search-box" cols="30" rows="1"></textarea>
-            <a href="#" onclick=""><i class="fas fa-search"></i></a>
+            <input type="text" name="search-box" id="search-box" placeholder="Procure por um nome ou id."></input>
+            <a onclick="searchPokemon()"><i class="fas fa-search"></i></a>
         </div>
+        <div class="im-luck"><a onclick="myteam()">My Team</a></div>
     </header>
     <main>
         <div class="container">
-            <div class="pokemon">
-                <span class="id">1</span>
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="">
-                <h3>Bulbasaur</h3>
-                <div class="types">
-                    <i class="fas fa-circle"></i>
-                    <i class="fas fa-circle"></i>
-                    <i class="fas fa-circle"></i>
-                </div>
-                <div class="stats">
-                    <div id="hp">HP</div>
-                    <div id="attack">ATK</div>
-                    <div id="defense">DEF</div>
-                    <div id="special-attack">ATK Special</div>
-                    <div id="special-defense">DEF Special</div>
-                    <div id="speed">SPD</div>
-                </div>
-                <div class="about">
-                    <span><i class="fas fa-arrows-alt-v"></i> ?? <i class="fas fa-weight"></i> ??</span>
-                </div>
-
+            <div class="error-container" style="display: none;">
+                <p>Ops. Parece que tivemos um erro!</p>
+                <p>Verifique se digitou o Nome/ID correto do Pokemon que você procura.</p>
+                <p>Caso o problema venha a persistir, não se preocupe logo sera resolvido.</p>
             </div>
         </div>
     </main>

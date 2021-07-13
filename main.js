@@ -4,20 +4,19 @@ function getElement(element){
 
 const divContainer = getElement("main .container");
 const baseUrl = "https://pokeapi.co/api/v2/pokemon/"
-var pokemon = {};
+var pokemon;
+var flagError = false; 
 
-function requestPokemon(url, name){
-    fetch(url + name)
-    .then(response => response.json())
-    .then(data => {pokemon = data;})
-    .catch(err => console.log(err));
+async function requestPokemon(url, name){
+    
+    await fetch(url + name)
+        .then(response => response.json())
+        .then(data => {pokemon = data;})    
+        .catch(err => {console.log(err); flagError = true;});
+       
 }
 
-requestPokemon(baseUrl, 'bulbasaur');
-
-console.log(pokemon);
-
-function pokemonViewBuilder(){
+function pokemonViewBuilder(pokemon){
 
     let divPokemon = document.createElement("div");
     divPokemon.className = `pokemon ${pokemon.types[0].type.name}-bg`;
@@ -30,7 +29,7 @@ function pokemonViewBuilder(){
 
     //IMG Component Builder
     let imgPok = document.createElement("img");
-    imgPok.src = pokemon.sprites.other["official-artwork"].front_default;
+    imgPok.src = pokemon.sprites.front_default;
     divPokemon.appendChild(imgPok);
 
     //Name Component Builder
@@ -79,16 +78,66 @@ function pokemonViewBuilder(){
     let divAbout = document.createElement("div");
     divAbout.className = "about"
     let span = document.createElement("span");
-    span.innerHTML = `<i class="fas fa-arrows-alt-v"></i> ${pokemon.height/10}M <i class="fas fa-weight"></i> ${pokemon.weight}KG`;
+    span.innerHTML = `<i class="fas fa-arrows-alt-v"></i> ${pokemon.height/10}M <i class="fas fa-weight"></i> ${pokemon.weight/10}KG`;
 
     divAbout.appendChild(span);
     divWrapper.appendChild(divAbout);
 
     divPokemon.appendChild(divWrapper);
 
+    //Add to HTML
     divContainer.appendChild(divPokemon);
     
-    
+}
 
+function searchPokemon(pokemonIdentifier){
+
+    var pokemonIdentifier = (getElement("#search-box").value).toLowerCase();
+
+    console.log(pokemonIdentifier);
+
+    requestPokemon(baseUrl, pokemonIdentifier);
+
+        
+    setTimeout(() => {
+        if(flagError){
+            errorOnRequest("show");
+            flagError = !flagError;
+        }else{
+            errorOnRequest("hide");
+            pokemonViewBuilder(pokemon);
+        }
+    }, 1000);
 
 }
+
+function errorOnRequest(opt){
+    let card = getElement(".error-container");
+    if(opt == "show"){
+        divContainer.innerHTML = "";
+        divContainer.appendChild(card);
+        card.style.display = "flex";
+    }else if(opt = "hide"){
+        card.style.display = "none";
+    }
+}
+
+/*
+var myTeamPokemons = [];
+
+function myteam(){
+
+
+    var id = 0;
+
+    for(var i = 0; i < 4; i++){
+        id = Math.floor(Math.random() * 898 - 0);
+        requestPokemon(baseUrl, id);
+        setTimeout(() => {
+            pokemonViewBuilder(pokemon);
+
+        }, 1000)
+    }
+
+}
+*/
