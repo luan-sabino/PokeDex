@@ -3,7 +3,7 @@ function getElement(element){
 }
 
 const divContainer = getElement("main .container");
-const baseUrl = "https://pokeapi.co/api/v2/pokemon/"
+const baseUrl = "https://pokeapi.co/api/v2/pokemon/";
 var pokemon;
 var flagError = false; 
 
@@ -63,6 +63,7 @@ function pokemonViewBuilder(pokemon){
         let colorBg = styles.getPropertyValue(`--${statName}`);
         
         let statValue = pokemon.stats[index].base_stat;
+        div.title = statValue;
         let background = `linear-gradient(to right, ${colorBg} 0% ${statValue}%, white ${statValue}% 100%)`;
         div.style.background = background;
         
@@ -90,29 +91,46 @@ function pokemonViewBuilder(pokemon){
     
 }
 
-function searchPokemon(pokemonIdentifier){
+function searchPokemon(pokemonIdentifier = (getElement("#search-box").value).toLowerCase(), myTeam = false){
 
-    var pokemonIdentifier = (getElement("#search-box").value).toLowerCase();
+    if(document.getElementById("welcome") != null){
+        divContainer.removeChild(document.getElementById("welcome"));
+    }
 
-    console.log(pokemonIdentifier);
+    let outFirstIntervalAPI = (parseInt(pokemonIdentifier) <= 0 || parseInt(pokemonIdentifier) >= 899);
+    let outSecondIntervalAPI = (parseInt(pokemonIdentifier) <= 10000 || parseInt(pokemonIdentifier) >= 10221);
 
+    if(pokemonIdentifier === "" || (outFirstIntervalAPI && outSecondIntervalAPI)){
+            errorOnRequest("show");
+            return;
+    }
+    
+    if(!myTeam){
+        disableButtons();
+    }
+    
+    pokemon = null;
     requestPokemon(baseUrl, pokemonIdentifier);
-
-        
     setTimeout(() => {
-        if(flagError){
+        if(flagError || pokemon == null){
             errorOnRequest("show");
             flagError = !flagError;
+            if(!myTeam){
+                disableButtons();
+            }
         }else{
             errorOnRequest("hide");
             pokemonViewBuilder(pokemon);
+            if(!myTeam){
+                disableButtons();
+            }
         }
     }, 1000);
 
 }
 
 function errorOnRequest(opt){
-    let card = getElement(".error-container");
+    let card = getElement(".placeholder-container");
     if(opt == "show"){
         divContainer.innerHTML = "";
         divContainer.appendChild(card);
@@ -122,22 +140,66 @@ function errorOnRequest(opt){
     }
 }
 
-/*
-var myTeamPokemons = [];
-
-function myteam(){
-
-
-    var id = 0;
-
-    for(var i = 0; i < 4; i++){
-        id = Math.floor(Math.random() * 898 - 0);
-        requestPokemon(baseUrl, id);
-        setTimeout(() => {
-            pokemonViewBuilder(pokemon);
-
-        }, 1000)
+function clearView(){
+    let pokemons = document.querySelectorAll(".pokemon");
+    if(pokemons.length == 0){
+        return console.log("Already clear");
+    }else{
+        for(i = 0; i < pokemons.length; i++){
+            divContainer.removeChild(document.querySelector(".pokemon"));
+        }
     }
+}
+
+function myTeam(){
+   
+    disableButtons();
+    
+    clearView();
+
+    var counter = 0;
+
+    let interval = setInterval(()=>{
+        if(counter == 3){
+            clearInterval(interval);
+            disableButtons();
+        }
+        counter++;
+        delay();
+    }, 1100);
 
 }
-*/
+
+function delay(){
+    var id = Math.floor(Math.random() * 898 - 0);
+    setTimeout(
+        ()=>{
+            searchPokemon(id, true);
+        }, 1000
+    )
+}
+
+function disableButtons(){
+    let resetBtn = document.querySelector(".reset");
+    let searchBtn = document.querySelector("#search-box");
+    let myTeamBtn = document.querySelector(".myTeam");
+
+    if(resetBtn.disabled){
+        resetBtn.disabled = !resetBtn.disabled; 
+        resetBtn.style.pointerEvents = "all";
+        searchBtn.disabled = !searchBtn.disabled;
+        searchBtn.style.pointerEvents = "all"; 
+        myTeamBtn.disabled = !myTeamBtn.disabled;
+        myTeamBtn.style.pointerEvents = "all";
+    }else{
+        resetBtn.disabled = !resetBtn.disabled; 
+        resetBtn.style.pointerEvents = "none";
+        searchBtn.disabled = !searchBtn.disabled;
+        searchBtn.style.pointerEvents = "none"; 
+        myTeamBtn.disabled = !myTeamBtn.disabled;
+        myTeamBtn.style.pointerEvents = "none";
+
+    }
+
+
+}

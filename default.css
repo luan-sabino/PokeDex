@@ -24,7 +24,7 @@ body{
     background: #141414;
 }
 
-/*_____________________ Search Box _____________________*/
+/*_____________________ Header _____________________*/
 
 header{
     background: #141414;
@@ -33,6 +33,9 @@ header{
     align-items: center;
     justify-content: space-around;
 }
+
+
+/*_____________________ Search Box _____________________*/
 
 header .container{
     width: 60%;
@@ -73,26 +76,33 @@ a{
     font-size: 1.8em;
 }
 
-header .im-luck{
-    width: 20%;
-}
+/*_____________________ Reset _____________________*/
 
-header .im-luck a{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    padding: 15px;
-    background-color: #343534;
-    border: 0px solid transparent;
-    border-radius: 8px;
-    text-decoration: none;
+header .reset{
     color: #a8a8a8;
+    font-size: 2.0em;
+    background-color: #343534;
+    padding: 15px;
+    border-radius: 8px;;
     cursor: pointer;
 }
 
-header .im-luck a:hover{
+header .reset:hover{
+    background-color: #434443;
+}
+
+/*_____________________ myTeam _____________________*/
+
+header .myTeam{
+    color: #a8a8a8;
+    padding: 15px 40px;
+    background-color: #343534;
+    font-size: 1.2em;
+    border-radius: 8px;;
+    cursor: pointer;
+}
+
+header .myTeam:hover{
     background-color: #434443;
 }
 
@@ -118,8 +128,8 @@ main .container{
 }
 
 @keyframes zoomcards {
-    from{width:0; height: 0;}
-    to{width:250px; height: 500px;}
+    from{transform: scale(0);}
+    to{transform: scale(1);}
 }
 
 main .container .pokemon{
@@ -132,7 +142,7 @@ main .container .pokemon{
     align-items: center;
     margin-bottom: 15px;
     animation: zoomcards;
-    animation-duration: 0.4s;
+    animation-duration: 0.2s;
 }
 
 main .container .pokemon img{
@@ -197,7 +207,7 @@ main .container .pokemon img{
 .fire-bg       {background-color: #F080307e;}
 .water-bg      {background-color: #6890F07e;}
 .grass-bg      {background-color: #78C8507e;}
-.electric-bg    {background-color: #F8D0307e;}
+.electric-bg   {background-color: #F8D0307e;}
 .ice-bg        {background-color: #98D8D87e;}
 .fighting-bg   {background-color: #C030287e;}
 .poison-bg     {background-color: #A040A07e;}
@@ -212,23 +222,9 @@ main .container .pokemon img{
 .steel-bg      {background-color: #B8B8D07e;}
 .fairy-bg      {background-color: #F0B6BC7e;}
 
-/*_____________________ Error _____________________*/
+/*_____________________ Error/PlaceHolder _____________________*/
 
-@keyframes zoomerror {
-    from{
-        width:0%; 
-        height: 0;
-        font-size: 0;
-    }
-    to{
-        width:80%; 
-        height: 500px;
-        font-size: 2.0em;
-    }
-}
-
-
-.error-container{
+.placeholder-container{
     width: 80%;
     height: 500px;
     display: flex;
@@ -241,9 +237,29 @@ main .container .pokemon img{
     font-size: 2.0em;
     border: 0px solid transparent;
     border-radius: 16px;
-    animation: zoomerror 0.4s;
+    animation: zoomcards 0.2s;
 }
 
-.error-container p{
+.placeholder-container p{
     margin-top: 15px;
+}
+
+/*_____________________ Responsive _____________________*/
+
+@media screen and (max-width: 425px) {
+    header{
+        flex-direction: column;
+    }
+
+    header .container,header .myTeam,header .reset{
+        width: 90%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    main .container .pokemon{
+        width: 90%;
+        height: 570px;
+    }
+
 }

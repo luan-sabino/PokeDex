@@ -10,18 +10,24 @@
 </head>
 <body>
     <header class="search-header">
+        <div class="reset" onclick="clearView()"><i class="fas fa-redo-alt"></i></div>
         <div class="container">
-            <input type="text" name="search-box" id="search-box" placeholder="Procure por um nome ou id."></input>
+            <input type="text" name="search-box" id="search-box" placeholder="Nome ou ID"></input>
             <a onclick="searchPokemon()"><i class="fas fa-search"></i></a>
         </div>
-        <div class="im-luck"><a onclick="myteam()">My Team</a></div>
+        <div class="myTeam"><a onclick="myTeam()">My Team</a></div>
     </header>
     <main>
         <div class="container">
-            <div class="error-container" style="display: none;">
+            <div class="placeholder-container" style="display: none;">
                 <p>Ops. Parece que tivemos um erro!</p>
                 <p>Verifique se digitou o Nome/ID correto do Pokemon que você procura.</p>
                 <p>Caso o problema venha a persistir, não se preocupe logo sera resolvido.</p>
+            </div>
+            <div class="placeholder-container" id="welcome" style="display: flex;">
+                <p>Oi, bem vindo a PokeDex!</p>
+                <p>Procure pelo ID ou Nome do Pokemon que deseja ver.</p>
+                <p>Caso queira tentar a sorte, clique em MyTeam.</p>
             </div>
         </div>
     </main>
