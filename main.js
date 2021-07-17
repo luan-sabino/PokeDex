@@ -16,6 +16,25 @@ async function requestPokemon(url, name){
        
 }
 
+window.onload = ()=>{
+    let flagIsTrusted = false;
+
+    document.addEventListener("keypress", (event)=>{
+        if(event.key == "Enter" && flagIsTrusted){
+            searchPokemon();
+        }
+    });
+    
+    document.querySelector("#search-box").addEventListener("focusin", (event)=>{
+        return flagIsTrusted = !flagIsTrusted;
+    });
+
+    document.querySelector("#search-box").addEventListener("focusout", (event)=>{
+        return flagIsTrusted = !flagIsTrusted;
+    });
+}
+
+
 function pokemonViewBuilder(pokemon){
 
     let divPokemon = document.createElement("div");
@@ -200,6 +219,13 @@ function disableButtons(){
         myTeamBtn.style.pointerEvents = "none";
 
     }
+
+
+}
+
+function enterKeyToSearch(){
+
+    
 
 
 }
