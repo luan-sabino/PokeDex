@@ -2,76 +2,76 @@ function getElement(element){
     return document.querySelector(element);
 }
 
-const divContainer = getElement("main .container");
+const principalContainer = getElement("main .container");
 const baseUrl = "https://pokeapi.co/api/v2/pokemon/";
-var pokemon;
-var flagError = false; 
+
+var pokemonHolder;
+var hasAErrorOnTheRequest = false; 
 
 async function requestPokemon(url, name){
-    
     await fetch(url + name)
         .then(response => response.json())
-        .then(data => {pokemon = data;})    
-        .catch(err => {console.log(err); flagError = true;});
+        .then(data => {pokemonHolder = data;})    
+        .catch(err => {console.log(err); hasAErrorOnTheRequest = true;});
        
 }
 
 window.onload = ()=>{
-    let flagIsTrusted = false;
+    let theSearchBoxAreOnFocus = false;
 
     document.addEventListener("keypress", (event)=>{
-        if(event.key == "Enter" && flagIsTrusted){
+        if(event.key == "Enter" && theSearchBoxAreOnFocus){
             searchPokemon();
         }
     });
     
     document.querySelector("#search-box").addEventListener("focusin", (event)=>{
-        return flagIsTrusted = !flagIsTrusted;
+        return theSearchBoxAreOnFocus = !theSearchBoxAreOnFocus;
     });
 
     document.querySelector("#search-box").addEventListener("focusout", (event)=>{
-        return flagIsTrusted = !flagIsTrusted;
+        return theSearchBoxAreOnFocus = !theSearchBoxAreOnFocus;
     });
 }
 
 
 function pokemonViewBuilder(pokemon){
 
-    let divPokemon = document.createElement("div");
-    divPokemon.className = `pokemon ${pokemon.types[0].type.name}-bg`;
+    let pokemonContainer = document.createElement("div");
+    pokemonContainer.className = `pokemon ${pokemon.types[0].type.name}-bg`;
     
     //ID Component Builder
-    let spanId = document.createElement("span");
-    spanId.className = "id";
-    spanId.textContent = pokemon.id;
-    divPokemon.appendChild(spanId);
+    let idPokemon = document.createElement("span");
+    idPokemon.className = "id";
+    idPokemon.textContent = pokemon.id;
+    pokemonContainer.appendChild(idPokemon);
 
     //IMG Component Builder
-    let imgPok = document.createElement("img");
-    imgPok.src = pokemon.sprites.front_default;
-    divPokemon.appendChild(imgPok);
+    let imagePokemon = document.createElement("img");
+    imagePokemon.src = pokemon.sprites.front_default;
+    pokemonContainer.appendChild(imagePokemon);
 
     //Name Component Builder
-    let name = document.createElement("h3");
-    name.textContent = (pokemon.name).toUpperCase();
-    divPokemon.appendChild(name);
+    let namePokemon = document.createElement("h3");
+    namePokemon.textContent = (pokemon.name).toUpperCase();
+    pokemonContainer.appendChild(namePokemon);
 
     //Types Component Builder
-    let typesDiv = document.createElement("div");
-    typesDiv.className = "types";
+    let typesContainer = document.createElement("div");
+    typesContainer.className = "types";
 
     for(index = 0; index < pokemon.types.length; index++){
         let type = document.createElement("i");
         type.className = `fas fa-circle ${pokemon.types[index].type.name}`;
         type.title = `${pokemon.types[index].type.name}`
-        typesDiv.appendChild(type);
+        typesContainer.appendChild(type);
     }
 
-    divPokemon.appendChild(typesDiv);
+    pokemonContainer.appendChild(typesContainer);
 
     //Stats Component Builder
-    let statsDiv = document.createElement("div");
-    statsDiv.className = "stats";
+    let statsContainer = document.createElement("div");
+    statsContainer.className = "stats";
 
     for(index = 0; index < pokemon.stats.length; index++){
         let div = document.createElement("div");
@@ -79,48 +79,48 @@ function pokemonViewBuilder(pokemon){
         div.className = statName;
 
         let styles = getComputedStyle(document.body);
-        let colorBg = styles.getPropertyValue(`--${statName}`);
+        let colorBackground = styles.getPropertyValue(`--${statName}`);
         
         let statValue = pokemon.stats[index].base_stat;
         div.title = statValue;
-        let background = `linear-gradient(to right, ${colorBg} 0% ${statValue}%, white ${statValue}% 100%)`;
+        let background = `linear-gradient(to right, ${colorBackground} 0% ${statValue}%, white ${statValue}% 100%)`;
         div.style.background = background;
         
         div.textContent = statName.toUpperCase();
-        statsDiv.appendChild(div);
+        statsContainer.appendChild(div);
     }
 
-    divPokemon.appendChild(statsDiv);
+    pokemonContainer.appendChild(statsContainer);
 
     //Height and Weight Span Builder
 
-    let divWrapper = document.createElement("div");
-    let divAbout = document.createElement("div");
-    divAbout.className = "about"
-    let span = document.createElement("span");
-    span.innerHTML = `<i class="fas fa-arrows-alt-v"></i> ${pokemon.height/10}M <i class="fas fa-weight"></i> ${pokemon.weight/10}KG`;
+    let Wrapper = document.createElement("div");
+    let aboutContainer = document.createElement("div");
+    aboutContainer.className = "about"
+    let aboutContent = document.createElement("span");
+    aboutContent.innerHTML = `<i class="fas fa-arrows-alt-v"></i> ${pokemon.height/10}M <i class="fas fa-weight"></i> ${pokemon.weight/10}KG`;
 
-    divAbout.appendChild(span);
-    divWrapper.appendChild(divAbout);
+    aboutContainer.appendChild(aboutContent);
+    Wrapper.appendChild(aboutContainer);
 
-    divPokemon.appendChild(divWrapper);
+    pokemonContainer.appendChild(Wrapper);
 
     //Add to HTML
-    divContainer.appendChild(divPokemon);
+    principalContainer.appendChild(pokemonContainer);
     
 }
 
 function searchPokemon(pokemonIdentifier = (getElement("#search-box").value).toLowerCase(), myTeam = false){
 
     if(document.getElementById("welcome") != null){
-        divContainer.removeChild(document.getElementById("welcome"));
+        principalContainer.removeChild(document.getElementById("welcome"));
     }
 
-    let outFirstIntervalAPI = (parseInt(pokemonIdentifier) <= 0 || parseInt(pokemonIdentifier) >= 899);
-    let outSecondIntervalAPI = (parseInt(pokemonIdentifier) <= 10000 || parseInt(pokemonIdentifier) >= 10221);
+    let outFirstIntervalSearchAreaInAPI = (parseInt(pokemonIdentifier) <= 0 || parseInt(pokemonIdentifier) >= 899);
+    let outSecondIntervalSearchAreaAPI = (parseInt(pokemonIdentifier) <= 10000 || parseInt(pokemonIdentifier) >= 10221);
 
-    if(pokemonIdentifier === "" || (outFirstIntervalAPI && outSecondIntervalAPI)){
-            errorOnRequest("show");
+    if(pokemonIdentifier === "" || (outFirstIntervalSearchAreaInAPI && outSecondIntervalSearchAreaAPI)){
+            displayErrorOnRequestCard("show");
             return;
     }
     
@@ -128,18 +128,18 @@ function searchPokemon(pokemonIdentifier = (getElement("#search-box").value).toL
         disableButtons();
     }
     
-    pokemon = null;
+    pokemonHolder = null;
     requestPokemon(baseUrl, pokemonIdentifier);
     setTimeout(() => {
-        if(flagError || pokemon == null){
-            errorOnRequest("show");
-            flagError = !flagError;
+        if(hasAErrorOnTheRequest || pokemonHolder == null){
+            displayErrorOnRequestCard("show");
+            hasAErrorOnTheRequest = !hasAErrorOnTheRequest;
             if(!myTeam){
                 disableButtons();
             }
         }else{
-            errorOnRequest("hide");
-            pokemonViewBuilder(pokemon);
+            displayErrorOnRequestCard("hide");
+            pokemonViewBuilder(pokemonHolder);
             if(!myTeam){
                 disableButtons();
             }
@@ -148,11 +148,11 @@ function searchPokemon(pokemonIdentifier = (getElement("#search-box").value).toL
 
 }
 
-function errorOnRequest(opt){
+function displayErrorOnRequestCard(opt){
     let card = getElement(".placeholder-container");
     if(opt == "show"){
-        divContainer.innerHTML = "";
-        divContainer.appendChild(card);
+        principalContainer.innerHTML = "";
+        principalContainer.appendChild(card);
         card.style.display = "flex";
     }else if(opt = "hide"){
         card.style.display = "none";
@@ -165,7 +165,7 @@ function clearView(){
         return console.log("Already clear");
     }else{
         for(i = 0; i < pokemons.length; i++){
-            divContainer.removeChild(document.querySelector(".pokemon"));
+            principalContainer.removeChild(document.querySelector(".pokemon"));
         }
     }
 }
@@ -184,12 +184,12 @@ function myTeam(){
             disableButtons();
         }
         counter++;
-        delay();
+        delayForRequest();
     }, 1100);
 
 }
 
-function delay(){
+function delayForRequest(){
     var id = Math.floor(Math.random() * 898 - 0);
     setTimeout(
         ()=>{
@@ -199,33 +199,24 @@ function delay(){
 }
 
 function disableButtons(){
-    let resetBtn = document.querySelector(".reset");
-    let searchBtn = document.querySelector("#search-box");
-    let myTeamBtn = document.querySelector(".myTeam");
+    let resetButton = document.querySelector(".reset");
+    let searchButton = document.querySelector("#search-box");
+    let myTeamButton = document.querySelector(".myTeam");
 
-    if(resetBtn.disabled){
-        resetBtn.disabled = !resetBtn.disabled; 
-        resetBtn.style.pointerEvents = "all";
-        searchBtn.disabled = !searchBtn.disabled;
-        searchBtn.style.pointerEvents = "all"; 
-        myTeamBtn.disabled = !myTeamBtn.disabled;
-        myTeamBtn.style.pointerEvents = "all";
+    if(resetButton.disabled){
+        resetButton.disabled = !resetButton.disabled; 
+        resetButton.style.pointerEvents = "all";
+        searchButton.disabled = !searchButton.disabled;
+        searchButton.style.pointerEvents = "all"; 
+        myTeamButton.disabled = !myTeamButton.disabled;
+        myTeamButton.style.pointerEvents = "all";
     }else{
-        resetBtn.disabled = !resetBtn.disabled; 
-        resetBtn.style.pointerEvents = "none";
-        searchBtn.disabled = !searchBtn.disabled;
-        searchBtn.style.pointerEvents = "none"; 
-        myTeamBtn.disabled = !myTeamBtn.disabled;
-        myTeamBtn.style.pointerEvents = "none";
+        resetButton.disabled = !resetButton.disabled; 
+        resetButton.style.pointerEvents = "none";
+        searchButton.disabled = !searchButton.disabled;
+        searchButton.style.pointerEvents = "none"; 
+        myTeamButton.disabled = !myTeamButton.disabled;
+        myTeamButton.style.pointerEvents = "none";
 
     }
-
-
-}
-
-function enterKeyToSearch(){
-
-    
-
-
 }
