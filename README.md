@@ -28,7 +28,8 @@
  acabar caindo em uma variavel undefined, principalmente com a implementação dinamica dos cards a partir dos dados presentes no objeto retornado pelo
  .fetch().
  
- ### ⚙️ Caso queira executar o projeto, basta clonar esse repositorio ou fazer o download do .zip, e abrir o "index.html". Futuramente esse projeto será hospedado em um portifólio.
+ ### ⚙️ Caso queira executar o projeto, basta clonar esse repositorio ou fazer o download do .zip, e abrir o "index.html". 
+ ### 🔗 Ou acesse atraves do link - [PokeDex](https://luan-sabino.github.io/PokeDex/).
  
  ## 🛠️ Construido com
  * Vanilla JS
